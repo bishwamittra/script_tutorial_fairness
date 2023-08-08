@@ -276,7 +276,7 @@ def _call_notears(data, sensitive_attributes, verbose=True, filename="temp"):
 def Bayesian_estimate(data, dependency_structure, graph_edges):
     
     
-    data.columns = range(1, data.shape[1] + 1)
+    # data.columns = range(1, data.shape[1] + 1)
     model = BayesianModel(graph_edges)
     model.fit(data, state_names={var: [0, 1] for var in data.columns})
     

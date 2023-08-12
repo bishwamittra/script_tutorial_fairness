@@ -464,7 +464,8 @@ class FairXplainer():
         # result = result.sort_values('weight', ascending=False)
 
         if (k is not None):
-            result.loc['Residual FIFs'] = residual_weight
+            # result.loc['Residual FIFs'] = residual_weight
+            result.loc['Others'] = residual_weight
 
         return result
 

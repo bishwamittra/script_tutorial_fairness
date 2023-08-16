@@ -1,6 +1,7 @@
 from argparse import ArgumentError
 from itertools import product
 from fairxplainer import hdmr
+from pprint import pprint
 from scipy.stats import norm, binom
 import pandas as pd
 import math
@@ -567,6 +568,8 @@ class FairXplainer():
         self._all_positive_prediction_probabilities = np.array(
             list(self.group_specific_positive_prediction_probabilities.values()))
         if (verbose):
+            print("Positive prediction rate of sensitive groups:")
+            pprint(self.group_specific_positive_prediction_probabilities)
             print("Empirical statistical parity:", self._all_positive_prediction_probabilities.max(
             ) - self._all_positive_prediction_probabilities.min())
             print("="*50)

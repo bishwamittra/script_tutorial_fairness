@@ -31,9 +31,9 @@ class FairXplainer():
                 self.dataset = self.dataset.rename(
                     {column: column.replace("/", " Or ")}, axis=1)  # "/" is used to show intersectional effects and hence reserved
                 
-    def compute(self, maxorder=2, lambax=0.01, spline_intervals=2, explain_sufficiency_fairness=False,
+    def compute(self, maxorder=2, lambdax=0.01, spline_intervals=2, explain_sufficiency_fairness=False,
                 approach="hdmr", # options: {hdmr, kernel}. hdmr is computationally efficient.
-                compute_sp_only=False,
+                compute_sp_only=False, maxiter=1000,
                 verbose=False, seed=22, cpu_time=300):
         """
             This code computes the variance of individual and intersectional features, the sum of which 
@@ -225,7 +225,7 @@ class FairXplainer():
 
                     qu = multiprocessing.Queue()
                     pr = multiprocessing.get_context("fork").Process(target=hdmr.analyze, args=(
-                        qu, problem, samples.values, Y, maxorder, 10000, spline_intervals, 1, None, 0.95, lambax, False, seed, ))
+                        qu, problem, samples.values, Y, maxorder, maxiter, spline_intervals, 1, None, 0.95, lambdax, False, seed, ))
                     pr.daemon = True
                     pr.start()
                     pr.join(timeout=int(cpu_time/2))
@@ -307,7 +307,7 @@ class FairXplainer():
         #     print()
         #     print(self.result)
 
-    def get_weights(self):
+    def get_weights(self, k=None):
 
         """
             Returns the weights of the features. This is called after compute() is called.
@@ -378,7 +378,17 @@ class FairXplainer():
                               'weight'], index=result.keys())
         result = result.sort_values('weight', ascending=False, key=abs)
 
-        result.loc["FIFs " + r"$(\lambda > 1)$"] = second_order_effect_sum
+        # get top k values
+        if (k is not None):
+            assert k >= 1
+            total_weight = result.sum().item()
+            result = result.head(k)
+            top_k_weight = result.sum().item()
+            residual_weight = total_weight - top_k_weight
+            result.loc['Residual first order'] = residual_weight
+
+
+        result.loc["Higher order influences"] = second_order_effect_sum
         return result
 
     def get_top_k_weights(self, k=None):

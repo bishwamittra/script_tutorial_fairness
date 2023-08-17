@@ -183,7 +183,7 @@ def _check_settings(X, Y, maxorder, maxiter, m, K, R, alpha, lambdax):
         raise RuntimeError(
             "SALib-HDMR ERROR: Field \"maxorder\" of options has to be 2 as d = 2 (X has two columns)")
 
-    if maxiter not in np.arange(1, 10001):
+    if maxiter not in np.arange(1, 1001):
         raise RuntimeError(
             "Field \"maxiter\" of options should be an integer between 1 to 1000.")
 
@@ -444,7 +444,7 @@ def _first_order(B1, Y_res, C1, R, n1, m1, maxiter, lambdax):
         # Backfitting Method
         var1b_old = np.sum(np.square(C1), axis=0)
         varmax = 1
-        while (varmax > 1e-3) and (it < maxiter):
+        while (varmax > 1e-3) and (it < 1000):
             for j in range(n1):
                 Y_r = Y_res
                 for z in range(n1):

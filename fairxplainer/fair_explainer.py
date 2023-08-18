@@ -600,6 +600,9 @@ def plot(result, draw_waterfall=True, fontsize=22, labelsize=18, figure_size=(10
     # plt.rcParams['text.usetex'] = True
     plt.rcParams['figure.figsize'] = figure_size
 
+    # starting line
+    plt.axvline(x=0, color='lightgray', linestyle='--')
+
     assert "weight" in result.columns
     assert len(result.columns) == 1
 

@@ -7,7 +7,7 @@ from numpy import genfromtxt
 import itertools
 from operator import add
 from pgmpy.estimators import ParameterEstimator
-from pgmpy.models import BayesianModel
+from pgmpy.models import BayesianNetwork
 from pgmpy.estimators import BayesianEstimator, BicScore
 import igraph as ig
 import warnings
@@ -277,7 +277,7 @@ def Bayesian_estimate(data, dependency_structure, graph_edges):
     
     
     # data.columns = range(1, data.shape[1] + 1)
-    model = BayesianModel(graph_edges)
+    model = BayesianNetwork(graph_edges)
     model.fit(data, state_names={var: [0, 1] for var in data.columns})
     
     probs = {}

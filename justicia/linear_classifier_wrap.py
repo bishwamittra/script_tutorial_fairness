@@ -2,7 +2,7 @@
 # wrapper for logistic regression
 from pysat.pb import *
 from pysat.solvers import Glucose3
-from fractions import gcd
+from math import gcd
 from functools import reduce
 # from fairness_comparison.fairness.data.objects.ProcessedData import ProcessedData
 # from fairness_comparison.fairness.data.objects.Adult import Adult

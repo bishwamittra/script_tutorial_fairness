@@ -17,7 +17,7 @@ from justicia.subsetsum import SubSetSumCount
 
 
 # supporting classifiers
-from pyrulelearn.imli import imli
+# from pyrulelearn.imli import imli
 from sklearn.linear_model import LogisticRegression
 from sklearn.svm import SVC
 from sklearn.tree import DecisionTreeClassifier
@@ -1112,8 +1112,8 @@ class Metric():
         return max_value, min_value
 
     def _retrieve_model_name(self):
-        if (isinstance(self.model, imli)):
-            return "CNF"
+        # if (isinstance(self.model, imli)):
+        #     return "CNF"
         if (isinstance(self.model, DecisionTreeClassifier)):
             return "decision-tree"
         if (isinstance(self.model, SVC)):
